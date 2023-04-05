@@ -40,7 +40,7 @@ struct ContentView: View {
                         Text("\(population)")
                             .font(.system(size: 40, weight: .bold, design: .rounded))
                     } else {
-                        Text("Loading...")
+                        Text("8,072,586,503")
                     }
                 }
                 
@@ -52,7 +52,7 @@ struct ContentView: View {
                         Text("\(births)")
                             .font(.system(size: 40, weight: .bold, design: .rounded))
                     } else {
-                        Text("Loading...")
+                        Text("353,456")
                     }
                 }
                 
@@ -64,7 +64,7 @@ struct ContentView: View {
                         Text("\(deaths)")
                             .font(.system(size: 40, weight: .bold, design: .rounded))
                     } else {
-                        Text("Loading...")
+                        Text("176,344")
                     }
                 }
                 Button(action: {
