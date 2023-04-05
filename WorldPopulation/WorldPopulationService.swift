@@ -9,7 +9,7 @@
 import Foundation
 
 class WorldPopulationService {
-    private let apiKey = "YOUR_API_KEY"
+    private let apiKey = "YOUR_API_KEY" // Working on the API KEY SOON 
     private let apiUrl = "https://population.io"
     
     func fetchWorldPopulation(completion: @escaping (WorldPopulation?) -> Void) {
