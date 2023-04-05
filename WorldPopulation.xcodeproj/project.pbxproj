@@ -17,6 +17,7 @@
 		D9F3707A29DD096F00B1B727 /* HistoricalDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F3707929DD096F00B1B727 /* HistoricalDataView.swift */; };
 		D9F3707C29DD0D5800B1B727 /* BarCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F3707B29DD0D5800B1B727 /* BarCart.swift */; };
 		D9F3707E29DD234C00B1B727 /* HistoricalDataRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F3707D29DD234C00B1B727 /* HistoricalDataRow.swift */; };
+		D9F3708029DD2BAB00B1B727 /* BackgroundGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F3707F29DD2BAB00B1B727 /* BackgroundGradientView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		D9F3707929DD096F00B1B727 /* HistoricalDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoricalDataView.swift; sourceTree = "<group>"; };
 		D9F3707B29DD0D5800B1B727 /* BarCart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarCart.swift; sourceTree = "<group>"; };
 		D9F3707D29DD234C00B1B727 /* HistoricalDataRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoricalDataRow.swift; sourceTree = "<group>"; };
+		D9F3707F29DD2BAB00B1B727 /* BackgroundGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundGradientView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 				D9F3707329DD01AE00B1B727 /* WorldPopulation.swift */,
 				D9F3707929DD096F00B1B727 /* HistoricalDataView.swift */,
 				D9F3707D29DD234C00B1B727 /* HistoricalDataRow.swift */,
+				D9F3707F29DD2BAB00B1B727 /* BackgroundGradientView.swift */,
 				D9F3707729DD07C200B1B727 /* SearchBar.swift */,
 				D9F3706829DD017100B1B727 /* Assets.xcassets */,
 				D9F3706A29DD017100B1B727 /* WorldPopulation.entitlements */,
@@ -163,6 +166,7 @@
 				D9F3707829DD07C200B1B727 /* SearchBar.swift in Sources */,
 				D9F3706529DD016F00B1B727 /* WorldPopulationApp.swift in Sources */,
 				D9F3707629DD01CE00B1B727 /* WorldPopulationService.swift in Sources */,
+				D9F3708029DD2BAB00B1B727 /* BackgroundGradientView.swift in Sources */,
 				D9F3707E29DD234C00B1B727 /* HistoricalDataRow.swift in Sources */,
 				D9F3707C29DD0D5800B1B727 /* BarCart.swift in Sources */,
 			);

@@ -21,10 +21,8 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [colorScheme == .dark ? .black : .white,
-                                                       colorScheme == .dark ? Color.gray.opacity(0.4) : Color.gray.opacity(0.1)]),
-                           startPoint: .top, endPoint: .bottom)
-            .edgesIgnoringSafeArea(.all)
+            // Add the background gradient view
+                        BackgroundGradientView()
             
             VStack(spacing: 30) {
                 Text("World Population")
