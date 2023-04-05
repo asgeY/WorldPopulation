@@ -5,22 +5,131 @@
 //  Created by AsgeY on 4/4/23.
 //
 
+
 import SwiftUI
 
 struct ContentView: View {
+    @State private var worldPopulation: WorldPopulation?
+    @State private var timer: Timer?
+    @State private var searchText: String = ""
+    @State private var showHistoricalData = false
+    @State private var showAlert = false
+    
+    @Environment(\.colorScheme) var colorScheme
+    
+    private let worldPopulationService = WorldPopulationService()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [colorScheme == .dark ? .black : .white,
+                                                       colorScheme == .dark ? Color.gray.opacity(0.4) : Color.gray.opacity(0.1)]),
+                           startPoint: .top, endPoint: .bottom)
+            .edgesIgnoringSafeArea(.all)
+            
+            VStack(spacing: 30) {
+                Text("World Population")
+                    .font(.system(size: 40, weight: .bold, design: .rounded))
+                SearchBar(text: $searchText)
+                    .padding(.horizontal)
+                
+                Group {
+                    Text("Total Population")
+                        .font(.system(size: 24, weight: .semibold, design: .rounded))
+                    
+                    if let population = worldPopulation?.population {
+                        Text("\(population)")
+                            .font(.system(size: 40, weight: .bold, design: .rounded))
+                    } else {
+                        Text("Loading...")
+                    }
+                }
+                
+                Group {
+                    Text("Births")
+                        .font(.system(size: 24, weight: .semibold, design: .rounded))
+                    
+                    if let births = worldPopulation?.births {
+                        Text("\(births)")
+                            .font(.system(size: 40, weight: .bold, design: .rounded))
+                    } else {
+                        Text("Loading...")
+                    }
+                }
+                
+                Group {
+                    Text("Deaths")
+                        .font(.system(size: 24, weight: .semibold, design: .rounded))
+                    
+                    if let deaths = worldPopulation?.deaths {
+                        Text("\(deaths)")
+                            .font(.system(size: 40, weight: .bold, design: .rounded))
+                    } else {
+                        Text("Loading...")
+                    }
+                }
+                Button(action: {
+                                    if searchText.isEmpty {
+                                        showAlert = true
+                                    } else {
+                                        showHistoricalData = true
+                                    }
+                                }) {
+                    Text("Show Historical Data")
+                        .font(.system(size: 18, weight: .semibold, design: .rounded))
+                        .foregroundColor(colorScheme == .dark ? .black : .white)
+                        .padding(.horizontal, 40)
+                        .padding(.vertical, 12)
+                        .background(colorScheme == .dark ? Color.gray.opacity(0.8) : Color.gray)
+                        .cornerRadius(8)
+                }
+            }
+            
+            .foregroundColor(colorScheme == .dark ? .white : .black)
+            .padding()
+            
         }
-        .padding()
+        .alert(isPresented: $showAlert) {
+                    Alert(
+                        title: Text("Info"),
+                        message: Text("Please search a country in order to see historical data."),
+                        dismissButton: .default(Text("OK"))
+                    )
+                }
+        
+        .sheet(isPresented: $showHistoricalData) {
+            HistoricalDataView()
+        }
+        .onAppear {
+            startFetchingPopulation()
+        }
+        .onDisappear {
+            timer?.invalidate()
+        }
+    }
+    
+    func startFetchingPopulation() {
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            worldPopulationService.fetchWorldPopulation { population in
+                DispatchQueue.main.async {
+                    self.worldPopulation = population
+                }
+            }
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        Group {
+            ContentView()
+                .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
+                .environment(\.colorScheme, .light)
+                .previewDisplayName("Light Mode")
+            
+            ContentView()
+                .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
+                .environment(\.colorScheme, .dark)
+                .previewDisplayName("Dark Mode")
+        }
     }
 }
