@@ -5,12 +5,13 @@
 //  Created by AsgeY on 4/4/23.
 //
 
-// HistoricalDataView.swift
 import SwiftUI
 
+
 struct HistoricalDataView: View {
+    var selectedCountry: Country
     
-    @State private var countrySummary: String = "The U.S. is a country of 50 states covering a vast swath of North America, with Alaska in the northwest and Hawaii extending the nation’s presence into the Pacific Ocean. Major Atlantic Coast cities are New York, a global finance and culture center, and capital Washington, DC. Midwestern metropolis Chicago is known for influential architecture and on the west coast, Los Angeles' Hollywood is famed for filmmaking."
+    @State  var countrySummary: String
     
     // Replace the following data with the actual historical population data
     let historicalData: [(year: String, population: Int)] = [
@@ -21,7 +22,11 @@ struct HistoricalDataView: View {
         ("2019", 1080000),
         ("2020", 1100000)
     ]
-    
+    init(selectedCountry: Country) {
+            self.selectedCountry = selectedCountry
+            self._countrySummary = State(initialValue: selectedCountry.summary)
+        }
+        
     var body: some View {
         VStack {
             Text("Historical Population Data")
@@ -32,8 +37,9 @@ struct HistoricalDataView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {
                     ForEach(historicalData, id: \.year) { dataPoint in
-                        HistoricalDataRow(year: dataPoint.year, population: dataPoint.population)
+                        HistoricalDataRow(year: dataPoint.year, population: dataPoint.population, countryCode: selectedCountry.isoCode)
                     }
+
                 }
                 .padding()
             }
@@ -54,11 +60,11 @@ struct HistoricalDataView: View {
     }
 }
 
-struct HistoricalDataView_Previews: PreviewProvider {
-    static var previews: some View {
-        HistoricalDataView()
-    }
-}
-
-
-
+//struct HistoricalDataView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        HistoricalDataView(selectedCountry: Country(name: "United States", isoCode: "us", summary: ""))
+//    }
+//}
+//
+//
+//

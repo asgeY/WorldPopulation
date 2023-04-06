@@ -5,11 +5,11 @@
 //  Created by AsgeY on 4/4/23.
 //
 
-// SearchBar.swift
 import SwiftUI
 
 struct SearchBar: UIViewRepresentable {
     @Binding var text: String
+    //@Binding var selectedCountry: Country? // Add this property
 
     func makeCoordinator() -> Coordinator {
         Coordinator(self)

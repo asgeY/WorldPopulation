@@ -14,7 +14,10 @@ struct ContentView: View {
     @State private var searchText: String = ""
     @State private var showHistoricalData = false
     @State private var showAlert = false
+    @State private var countries: [Country] = decodeCountries(from: jsonString)
+    @State private var selectedCountry: Country?
     
+
     @Environment(\.colorScheme) var colorScheme
     
     private let worldPopulationService = WorldPopulationService()
@@ -22,7 +25,7 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             // Add the background gradient view
-                        BackgroundGradientView()
+            BackgroundGradientView()
             
             VStack(spacing: 30) {
                 Text("World Population")
@@ -66,12 +69,12 @@ struct ContentView: View {
                     }
                 }
                 Button(action: {
-                                    if searchText.isEmpty {
-                                        showAlert = true
-                                    } else {
-                                        showHistoricalData = true
-                                    }
-                                }) {
+                    if searchText.isEmpty {
+                        showAlert = true
+                    } else {
+                        showHistoricalData = true
+                    }
+                }) {
                     Text("Show Historical Data")
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
                         .foregroundColor(colorScheme == .dark ? .black : .white)
@@ -87,22 +90,44 @@ struct ContentView: View {
             
         }
         .alert(isPresented: $showAlert) {
-                    Alert(
-                        title: Text("Info"),
-                        message: Text("Please search a country in order to see historical data."),
-                        dismissButton: .default(Text("OK"))
-                    )
-                }
+            Alert(
+                title: Text("Info"),
+                message: Text("Please search a country in order to see historical data."),
+                dismissButton: .default(Text("OK"))
+            )
+        }
         
         .sheet(isPresented: $showHistoricalData) {
-            HistoricalDataView()
+            Group {
+                if let selectedCountry = selectedCountry {
+                    HistoricalDataView(selectedCountry: selectedCountry)
+                } else {
+                    Text("No country selected")
+                }
+            }
+            .onAppear(perform: startFetchingPopulation)
+            .onDisappear(perform: {
+                
+                timer?.invalidate()
+            })
         }
-        .onAppear {
-            startFetchingPopulation()
+        if !searchText.isEmpty {
+            CountrySearchSuggestions(
+                searchText: searchText,
+                countries: countries,
+                onSelectCountry: { country in
+                    selectedCountry = country
+                    searchText = country.name // Update the searchText to the selected country's name
+                }
+            )
+            .background(Color(.systemBackground))
+            .cornerRadius(10)
+            .padding([.top, .horizontal], 10)
+            .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
+            .transition(.move(edge: .top))
         }
-        .onDisappear {
-            timer?.invalidate()
-        }
+        
+        
     }
     
     func startFetchingPopulation() {
